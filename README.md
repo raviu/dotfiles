@@ -1,8 +1,11 @@
 # dotfiles
 Dotfile collections. 
 
-## Change Log
-### 0.1
+# OSX 
+TODO instructions to get OSX up and running 
+
+# Change Log
+## 0.1
 * Added OSX Dotfiles collection (without tmux and vim plugins) 
 
 # References 
