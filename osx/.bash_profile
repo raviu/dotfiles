@@ -7,3 +7,16 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
 done;
 unset file;
 
+### File Descriptor Limit (in addition to /etc/sysctl.conf ###
+ulimit -S -n 16000
+
+### bash-completion when bash < v4
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+
+### bash-completion when bash > v4
+#if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+#  . /usr/local/share/bash-completion/bash_completion
+#fi
+
+## Git Autocomplete (brew install git bash-completion
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
