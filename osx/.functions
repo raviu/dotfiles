@@ -19,6 +19,11 @@ webm2mp4() {
 	ffmpeg -i "$1" -movflags faststart "$1.mp4"
 }
 
+function mkv2mp4() {
+    echo "Converting $1 to $1.mp4"
+    ffmpeg -i "$1" -c:v libx264 -c:a aac "$1.mp4"
+}
+
 run-jenkins() {
 	docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts > /usr/local/var/log/jenkins_docker.log 2>&1 &
 }
