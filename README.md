@@ -5,10 +5,13 @@ Dotfile collections.
 TODO instructions to get OSX up and running 
 
 ## Linux (Debian Variants)
-Copy contents of [deb](deb/) to home directory and then run init.sh: 
+To install do either:  
 ```
-cp .* ~/
-sh init.sh
+curl -o- https://raw.githubusercontent.com/raviu/dotfiles/master/deb/install.sh | bash
+```
+
+```
+wget -qO- https://raw.githubusercontent.com/raviu/dotfiles/master/deb/install.sh | bash
 ```
 
 ## References 
