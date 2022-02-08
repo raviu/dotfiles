@@ -1,0 +1,156 @@
+###################################
+## Useful Utils
+###################################
+mjp() {
+    echo "Generating project $1 with groupID $2"
+    mvn archetype:generate -DgroupId="$2" -DartifactId=$1 -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+}
+
+docker-stop-all() {
+    docker container stop $(docker container ls -aq)
+}
+
+webm2mp4() {
+	echo "Transcoding $1"
+	ffmpeg -i "$1" -movflags faststart "$1.mp4"
+}
+
+function mkv2mp4() {
+    echo "Converting $1 to $1.mp4"
+    ffmpeg -i "$1" -c:v libx264 -c:a aac "$1.mp4"
+}
+
+run-jenkins() {
+	docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts > /usr/local/var/log/jenkins_docker.log 2>&1 &
+}
+
+cleanup-docker() {
+    echo "Cleaning up docker <none> images (those are sometimes generated while building an image and if for any reason the image building was interrupted, they stay there)"
+    docker rmi $(docker images | grep '^<none>' | awk '{print $3}')
+}
+
+### Terraform 
+terraform-get-all() {
+     for d in ./*/ ; do (cd "$d" && terraform get); done
+ }
+
+### Swagger 
+swagger() {
+    SWAGGER_PID=`ps -u $USER -o pid,command | grep [s]waggerapi/swagger-ui | cut -d ' ' -f 1`
+    kill $SWAGGER_PID
+    p="$(cd "$(dirname "$1")"; pwd)/"
+    echo "Opening $p"
+    docker pull swaggerapi/swagger-ui
+    docker run -p 9191:8080 -e SWAGGER_JSON=/mnt/$(basename "$1") -v $p:/mnt swaggerapi/swagger-ui &
+    echo "Opening browser" 
+    sleep 1
+    open "http://localhost:9191"
+}
+
+### GIT 
+function git-download-all-org-repos() {
+    echo "Downloading repos for $1"
+    mkdir $1
+    cd $1
+    #curl -sSL -H"Authorization: token $GITHUB_TOKEN" -D - "https://api.github.com/orgs/$1/repos?per_page=100&page=1" -o /dev/null
+    pages=`curl -sSL -H"Authorization: token $GITHUB_TOKEN" -D - "https://api.github.com/orgs/$1/repos?per_page=100&page=1" -o /dev/null | grep -F "Link:" | cut -d "," -f 2 | awk -F '>' '{print $1}' | awk -F '&page=' '{print $2}' | sed 's/&//'`
+    for i in $(seq 1 $pages);
+    do
+         curl -s -H"Authorization: token $GITHUB_TOKEN" "https://api.github.com/orgs/$1/repos?per_page=100&page=$i" | jq .[].ssh_url | xargs -n 1 git clone
+    done
+}
+function git-update-all-repos-in-dir() {
+    find . -type d -maxdepth 1 -print0 | xargs -0 -L1 sh -c 'cd "$0" && pwd && git stash && git checkout master && git pull'
+}
+
+###################################
+## IntelliJ
+###################################
+function idea() {
+    local idea_bin_path="/usr/local/bin/idea"
+    [[ ! -e "$idea_bin_path" ]] && (>&2 echo "idea CLI is not found in [$idea_bin_path].") && return 1
+    [[ "$1" == "-h" ]] && cat << EOF && return 1
+Usage: idea path[:number]
+
+Open an arbitrary file, folder, or project for editing in IntelliJ IDEA.
+For more information, please visit https://www.jetbrains.com/help/idea/opening-files-from-command-line.html.
+EOF
+    [[ $# -lt 1 ]] && $idea_bin_path . || $idea_bin_path "$@"
+}
+
+function idea-diff() {
+    local idea_bin_path="/usr/local/bin/idea"
+    [[ ! -e "$idea_bin_path" ]] && (>&2 echo "idea CLI is not found in [$idea_bin_path].") && return 1
+    [[ $# -ne 2 ]] && cat << EOF && return 1
+Usage: idea-diff path1 path2
+
+Viewing differences between files in IntelliJ IDEA.
+For more information, please visit https://www.jetbrains.com/help/idea/command-line-differences-viewer.html.
+EOF
+    $idea_bin_path diff "$@"
+}
+
+function idea-merge() {
+    local idea_bin_path="/usr/local/bin/idea"
+    [[ ! -e "$idea_bin_path" ]] && (>&2 echo "idea CLI is not found in [$idea_bin_path].") && return 1
+    [[ $# -ne 3 ]] && [[ $# -ne 4 ]] && cat << EOF && return 1
+Usage: idea-merge path1 path2 [path3] output
+
+Merge files in IntelliJ IDEA.
+For more information, please visit https://www.jetbrains.com/help/idea/command-line-merge-tool.html.
+EOF
+    $idea_bin_path merge "$@"
+}
+
+
+removeFromPath () {
+    export PATH=$(echo $PATH | sed -E -e "s;:$1;;" -e "s;$1:?;;")
+}
+
+
+
+
+###################################
+## Project Navigation with auto complete from Gary Teh https://github.com/garyteh/dotfiles
+###################################
+function p() {
+    [[ -z ${__P_PROJECT_PATH+x} ]] && echo '__P_PROJECT_PATH not found.' && return 1
+    [[ $# -ne 1 ]] && cat << EOF && return 1
+Usage: p [directory-name]
+
+Navigate to your project quickly. 
+EOF
+    local path paths numberOfProjects searchTerm
+    searchTerm="$1"
+    paths=$(gfind "$__P_PROJECT_PATH" -maxdepth ${__P_MAX_DEPTH:-1} -type d -name $searchTerm ! -path "$__P_PROJECT_PATH")
+
+    if [[ ! -z "${paths}" ]]; then
+        numberOfProjects=$(wc -l <<< "$paths")
+        if [[ $numberOfProjects -eq 1 ]]; then
+            path=$(sed '1q;d' <<< "$paths")
+            [[ -d "$path" ]] && cd "$path" && pwd && [[ ! -z ${__P_POST_CMD+x} ]] && eval ${__P_POST_CMD}
+            return 0
+        elif [[ $numberOfProjects -gt 1 ]]; then
+            nl <<< "$paths"
+            while true; do
+                read -p "Select project (1-$numberOfProjects): " index
+                if [[ $index =~ ^[0-9]+$ ]]; then
+                    path=$(sed "${index}q;d" <<< "$paths")
+                    [[ -d "$path" ]] && cd "$path" && pwd && [[ ! -z ${__P_POST_CMD+x} ]] && eval ${__P_POST_CMD}
+                    return 0
+                fi
+            done
+        fi
+    fi
+    echo "Project not found: $searchTerm"
+    return 1
+}
+
+function __list_directory_in_p_project_path() {
+    [[ -z ${__P_PROJECT_PATH+x} ]] && return 1
+    local curr potentials 
+    curr="${COMP_WORDS[COMP_CWORD]}"
+    potentials=$(gfind "$__P_PROJECT_PATH" -maxdepth ${__P_MAX_DEPTH:-1} -type d ! -path "$__P_PROJECT_PATH" -printf "%f\n")
+    COMPREPLY=( $(compgen -W "${potentials}" -- ${curr}) )
+}
+complete -F __list_directory_in_p_project_path p
