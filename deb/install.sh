@@ -27,9 +27,9 @@ else
     for dotfile in ${dotfiles[@]}; do
         echo  "Downloading "$dotfile" to ~/$dotfile"
         if [ "$DOWNLOADER" == "curl" ]; then 
-            curl -s "$BASE_URL/$dotfile" -o "~/$dotfile"
+            curl -H 'Cache-Control: no-cache' -s $BASE_URL/$dotfile -o ~/$dotfile
         else 
-            wget -q "$BASE_URL/$dotfile" -O "~/$dotfile"
+            wget --no-cache -q $BASE_URL/$dotfile -O ~/$dotfile
         fi 
     done
     
