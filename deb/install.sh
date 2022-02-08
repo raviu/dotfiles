@@ -4,7 +4,7 @@
 
 dotfiles=(.aliases .bash_profile .bash_prompt .exports .extra .functions .gitconfig .inputrc .path .profile .tmux.conf .vimrc)
 
-echo "Downloading and running deb-init.sh"                                                                                                  "
+echo "Downloading and running deb-init.sh"
 
 BASE_URL="https://raw.githubusercontent.com/raviu/dotfiles/master/deb/"
 
