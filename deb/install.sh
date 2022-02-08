@@ -23,17 +23,9 @@ if [ -z "$DOWNLOADER" ]; then
     echo ""
     exit 1
 else 
-    echo "Downloading deb-init.sh to /usr/local/bin"
-    if [ "$DOWNLOADER" == "curl" ]; then 
-        curl -s $BASE_URL/deb-init.sh -o ~/deb-init.sh
-    else 
-        wget -q $BASE_URL/deb-init.sh -O ~/deb-init-sh
-    fi 
-
-    chmod +x ~/deb-init.sh
 
     for dotfile in ${dotfiles[@]}; do
-        echo  "Downloading "$dofile" to ~/$dotfile" 
+        echo  "Downloading "$dotfile" to ~/$dotfile"
         if [ "$DOWNLOADER" == "curl" ]; then 
             curl -s "$BASE_URL/$dotfile" -o "~/$dotfile"
         else 
@@ -41,10 +33,16 @@ else
         fi 
     done
     
+    echo "Running deb-init.sh"
+    if [ "$DOWNLOADER" == "curl" ]; then
+        curl -H 'Cache-Control: no-cache' -o- "$BASE_URL/deb-init.sh" | bash
+    else
+        wget --no-cache -qO- "$BASE_URL/deb-init.sh" | bash
+    fi
+
 fi
 
 CUR_DIR=$(pwd)
-echo "Running deb-init.sh from /usr/local/bin"
-~/deb-init.sh
+echo "Done"
 
 } # force full scrip to download first

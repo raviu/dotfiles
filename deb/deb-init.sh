@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo "Creating temmporary directory for installations $HOME/init-dotfiles"
+echo "Creating temporary directory for installations $HOME/init-dotfiles"
 mkdir -p $HOME/init-dotfiles/
 cd $HOME/init-dotfiles
 
