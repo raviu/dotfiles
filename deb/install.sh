@@ -6,7 +6,7 @@ dotfiles=(.aliases .bash_profile .bash_prompt .exports .extra .functions .gitcon
 
 echo "Downloading and running deb-init.sh"
 
-BASE_URL="https://raw.githubusercontent.com/raviu/dotfiles/master/deb/"
+BASE_URL="https://raw.githubusercontent.com/raviu/dotfiles/master/deb"
 
 if command -v curl &> /dev/null 
 then
@@ -25,12 +25,12 @@ if [ -z "$DOWNLOADER" ]; then
 else 
     echo "Downloading deb-init.sh to /usr/local/bin"
     if [ "$DOWNLOADER" == "curl" ]; then 
-        curl -s $BASE_URL/deb-init.sh -o /usr/local/bin/deb-init.sh
+        curl -s $BASE_URL/deb-init.sh -o ~/deb-init.sh
     else 
-        wget -q $BASE_URL/deb-init.sh -O /usr/local/bin/deb-init-sh
+        wget -q $BASE_URL/deb-init.sh -O ~/deb-init-sh
     fi 
 
-    chmod +x /usr/local/bin/deb-init.sh
+    chmod +x ~/deb-init.sh
 
     for dotfile in ${dotfiles[@]}; do
         echo  "Downloading "$dofile" to ~/$dotfile" 
@@ -45,6 +45,6 @@ fi
 
 CUR_DIR=$(pwd)
 echo "Running deb-init.sh from /usr/local/bin"
-deb-init.sh
+~/deb-init.sh
 
 } # force full scrip to download first
