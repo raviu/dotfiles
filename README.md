@@ -5,7 +5,7 @@ Dotfile collections.
 TODO instructions to get OSX up and running 
 
 ## Linux (Debian Variants)
-Copy contents of (deb)[deb/] to home directory and then run init.sh: 
+Copy contents of [deb](deb/) to home directory and then run init.sh: 
 ```
 cp .* ~/
 sh init.sh
