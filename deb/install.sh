@@ -44,7 +44,7 @@ else
 fi
 
 CUR_DIR=$(pwd)
-echo "Installed deb-init.sh to /usr/local/bin"
+echo "Running deb-init.sh from /usr/local/bin"
 deb-init.sh
 
 } # force full scrip to download first
