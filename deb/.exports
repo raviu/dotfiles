@@ -1,0 +1,13 @@
+# Project Path 
+export __P_PROJECT_PATH=$HOME/dev/
+
+# JAVA 
+# use: update-alternatives --config java
+
+# Docker Compose Timeout 
+export COMPOSE_HTTP_TIMEOUT=30000
+
+# GOPATH 
+export GOPATH=/usr/local/go/bin
+export PATH=$PATH:$GOPATH
+
