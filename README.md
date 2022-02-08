@@ -7,11 +7,11 @@ TODO instructions to get OSX up and running
 ## Linux (Debian Variants)
 To install do either:  
 ```
-curl -o- https://raw.githubusercontent.com/raviu/dotfiles/master/deb/install.sh | bash
+curl -H 'Cache-Control: no-cache' -o- https://raw.githubusercontent.com/raviu/dotfiles/master/deb/install.sh | bash
 ```
 
 ```
-wget -qO- https://raw.githubusercontent.com/raviu/dotfiles/master/deb/install.sh | bash
+wget --no-cache -qO- https://raw.githubusercontent.com/raviu/dotfiles/master/deb/install.sh | bash
 ```
 
 ## References 

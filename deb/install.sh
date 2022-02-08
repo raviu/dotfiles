@@ -33,11 +33,11 @@ else
     chmod +x /usr/local/bin/deb-init.sh
 
     for dotfile in ${dotfiles[@]}; do
-        echo  "Downloading $dofile to ~/$dotfile" 
+        echo  "Downloading "$dofile" to ~/$dotfile" 
         if [ "$DOWNLOADER" == "curl" ]; then 
-            curl -s $BASE_URL/$dotfile -o ~/$dotfile
+            curl -s "$BASE_URL/$dotfile" -o "~/$dotfile"
         else 
-            wget -q $BASE_URL/$dotfile -O ~/$dotfile
+            wget -q "$BASE_URL/$dotfile" -O "~/$dotfile"
         fi 
     done
     
