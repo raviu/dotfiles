@@ -2,7 +2,14 @@
 Dotfile collections. 
 
 ## OSX 
-TODO instructions to get OSX up and running 
+To install do either:
+```
+curl -H 'Cache-Control: no-cache' -o- https://raw.githubusercontent.com/raviu/dotfiles/master/osx/install.sh | bash && source ~/.bash_profile
+```
+
+```
+wget --no-cache -qO- https://raw.githubusercontent.com/raviu/dotfiles/master/osx/install.sh | bash && source ~/.bash_profile
+```
 
 ## Linux (Debian Variants)
 To install do either:  
