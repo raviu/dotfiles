@@ -6,6 +6,14 @@ cd $HOME/init-dotfiles
 echo "Installing homebrew..." 
 "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+echo "Updating bash..."
+brew install bash
+
+echo "Adding latest bash to /etc/shells"
+echo /usr/local/bin/bash >> /etc/shells
+echo "Setting default shell to bash" 
+chsh -s /usr/local/bin/bash
+
 echo "Installing bash-completion" 
 brew install bash-completion
 
