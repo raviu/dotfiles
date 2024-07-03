@@ -27,7 +27,8 @@ echo "Installing tree..."
 brew install tree 
 
 echo "Install skdman..."
-$(curl -s "https://get.sdkman.io" | bash)
+/bin/bash -c "$(curl -s https://get.sdkman.io)"
+source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # Cleanup 
 echo "Removing temporary installations directory $HOME/init-dotfiles"
