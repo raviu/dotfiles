@@ -14,8 +14,8 @@ echo "Adding latest bash to /etc/shells"
 BASH_PATH=$(brew --prefix bash)
 sudo bash -c "echo $BASH_PATH >> /etc/shells"
 
-echo "Setting default shell to bash" 
-chsh -s /usr/local/bin/bash
+echo "Setting default shell to $BASH_PATH" 
+chsh -s $BASH_PATH
 
 echo "Installing bash-completion" 
 brew install bash-completion
