@@ -4,7 +4,7 @@ mkdir -p $HOME/init-dotfiles/
 cd $HOME/init-dotfiles
 
 echo "Installing homebrew..." 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
 echo "Updating bash..."
 brew install bash
