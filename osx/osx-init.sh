@@ -11,7 +11,7 @@ echo "Updating bash..."
 brew install bash
 
 echo "Adding latest bash to /etc/shells"
-sudo echo /usr/local/bin/bash >> /etc/shells
+sudo echo "/usr/local/bin/bash" >> /etc/shells
 echo "Setting default shell to bash" 
 chsh -s /usr/local/bin/bash
 
