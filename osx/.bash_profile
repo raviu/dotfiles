@@ -11,15 +11,16 @@ unset file;
 ulimit -S -n 16000
 
 ### bash-completion when bash < v4
-[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+#[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
 ### bash-completion when bash > v4
-#if [ -f /usr/local/share/bash-completion/bash_completion ]; then
-#  . /usr/local/share/bash-completion/bash_completion
-#fi
+if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+  . /usr/local/share/bash-completion/bash_completion
+fi
 
 ## Git Autocomplete (brew install git bash-completion
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
