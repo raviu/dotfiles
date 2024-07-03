@@ -107,28 +107,6 @@ EOF
 }
 
 
-
-###################################
-## Java Switch 
-###################################
-function java8() {
-    removeFromPath $JAVA_HOME
-    export JAVA_HOME=$JAVA_8_HOME
-    export PATH=$JAVA_HOME/bin:$PATH
-}
-
-function java7() {
-    removeFromPath $JAVA_HOME
-    export JAVA_HOME=$JAVA_7_HOME
-    export PATH=$JAVA_HOME/bin:$PATH
-}
-
-function java13() {
-    removeFromPath $JAVA_HOME
-    export JAVA_HOME=$JAVA_13_HOME
-    export PATH=$JAVA_HOME/bin:$PATH
-}
-
 removeFromPath () {
     export PATH=$(echo $PATH | sed -E -e "s;:$1;;" -e "s;$1:?;;")
 }
