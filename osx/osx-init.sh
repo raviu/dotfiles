@@ -11,7 +11,8 @@ echo "Updating bash..."
 brew install bash
 
 echo "Adding latest bash to /etc/shells"
-sudo bash -c "echo \"/usr/local/bin/bash\" >> /etc/shells"
+BASH_PATH=$(brew --prefix bash)
+sudo bash -c "echo $BASH_PATH >> /etc/shells"
 
 echo "Setting default shell to bash" 
 chsh -s /usr/local/bin/bash
