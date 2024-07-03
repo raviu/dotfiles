@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-{ # force full scrip to download first
+{ # force full script to download first
 
 dotfiles=(.aliases .bash_profile .bash_prompt .exports .extra .functions .gitconfig .inputrc .path .profile .tmux.conf .vimrc)
 
@@ -45,4 +45,4 @@ fi
 CUR_DIR=$(pwd)
 echo "Done"
 
-} # force full scrip to download first
+} # force full script to download first
