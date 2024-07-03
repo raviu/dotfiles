@@ -3,6 +3,9 @@ echo "Creating temporary directory for installations $HOME/init-dotfiles"
 mkdir -p $HOME/init-dotfiles/
 cd $HOME/init-dotfiles
 
+echo "sudoing..."
+sudo su 
+
 echo "Installing homebrew..." 
 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
