@@ -4,6 +4,9 @@ export __P_PROJECT_PATH=$HOME/dev/
 export HISTCONTROL=ignoredups
 #export HISTSIZE=10000
 
+# Homebrew 
+export PATH=/opt/homebrew/bin:$PATH
+
 # JAVA 
 export JAVA_7_HOME=$(/usr/libexec/java_home -v1.7)
 export JAVA_8_HOME=$(/usr/libexec/java_home -v1.8)
