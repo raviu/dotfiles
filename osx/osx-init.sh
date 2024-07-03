@@ -6,6 +6,8 @@ cd $HOME/init-dotfiles
 sudo echo "Installing homebrew..." 
 $(/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)")
 
+
+export PATH=/opt/homebrew/bin:$PATH
 echo "Updating bash..."
 brew install bash
 
