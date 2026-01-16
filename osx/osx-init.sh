@@ -33,6 +33,9 @@ echo "Install skdman..."
 /bin/bash -c "$(curl -s https://get.sdkman.io)"
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+echo "Install Claude Code..."
+curl -fsSL https://claude.ai/install.sh | bash
+
 # Cleanup 
 echo "Removing temporary installations directory $HOME/init-dotfiles"
 rm -rf $HOME/init-dotfiles

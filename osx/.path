@@ -1,4 +1,5 @@
 PATH="/usr/local/sbin:$PATH"
 PATH="$HOME/.bin:$PATH"
+PATH="$HOME/.local/bin:$PATH"
 
 export PATH
