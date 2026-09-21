@@ -39,3 +39,10 @@ curl -fsSL https://claude.ai/install.sh | bash
 # Cleanup 
 echo "Removing temporary installations directory $HOME/init-dotfiles"
 rm -rf $HOME/init-dotfiles
+
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+~/.tmux/plugins/tpm/bin/install_plugins
+
+tmux source-file ~/.tmux.conf
+
